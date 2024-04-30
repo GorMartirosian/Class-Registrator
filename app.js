@@ -15,7 +15,7 @@ const { timeout } = require("puppeteer");
 
   //login button
   let loginHandle = await page.$('a[href*="studsect.cfm"]');
-  await operationsLib.click(loginHandle);
+  await operationsLib.click(page, loginHandle);
 
   await login(page);
   await openRegistrationPanel(page);
@@ -35,7 +35,7 @@ async function login(page) {
     //   "Your Jenzabar password (I won't steal it (tghu xosq)): "
     //);
     await operationsLib.type(page, "#id_pin", "200218");
-    await operationsLib.click(await page.$("#Submit"));
+    await operationsLib.click(page, await page.$("#Submit"));
     try {
       await page.waitForSelector("#sonis-portal-body-container", {
         timeout: 4000,
@@ -50,5 +50,25 @@ async function login(page) {
 
 async function openRegistrationPanel(page) {
   let academicsPanel = await page.$('#nmreg > a');
-  await operationsLib.click(academicsPanel);
+  await operationsLib.click(page, academicsPanel);
+}
+
+async function getClassesToRegister() {
+  return (await io.getUserInput("PLease, type the classes you want to register(Ex. <!todo> )")).split(" ");
+}
+
+//Returns boolean of wether the class was successfully registered or not.
+async function registerForClass(page, classSelector ) {
+  //if no register button available return false
+  //else 
+  // click the register button
+  // click the checkpoint button
+  //return true 
+}
+
+async function registerForClasses(page, classes ){
+  //while the classes are not empty
+  //try to register
+  //if successfully registered, pop the class from the array
+  //else continue to the next class
 }
