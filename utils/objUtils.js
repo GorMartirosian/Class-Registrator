@@ -1,7 +1,7 @@
 const Table = require("./Table");
 
 /* Deep check of two object equality (NOT IDENTITY)*/
-const areEqual = (() => {
+const deepEqual = (() => {
   function initializeTable() {
     let opTable = new Table();
     opTable.set("array", "array", (arr1, arr2) => {
@@ -9,7 +9,7 @@ const areEqual = (() => {
         return false;
       }
       for (let nth = 0; nth < arr1.length; nth++) {
-        if (!areEqual(arr1[nth], arr2[nth])) {
+        if (!deepEqual(arr1[nth], arr2[nth])) {
           return false;
         }
       }
@@ -27,7 +27,7 @@ const areEqual = (() => {
       }
 
       for (let key of keys) {
-        if (!obj2.hasOwnProperty(key) || !areEqual(obj1[key], obj2[key])) {
+        if (!obj2.hasOwnProperty(key) || !deepEqual(obj1[key], obj2[key])) {
           return false;
         }
       }
@@ -65,7 +65,7 @@ function isSubObject(obj1, obj2) {
   }
 
   for (let key of keys) {
-    if (!obj2.hasOwnProperty(key) || !areEqual(obj1[key], obj2[key])) {
+    if (!obj2.hasOwnProperty(key) || !deepEqual(obj1[key], obj2[key])) {
       return false;
     }
   }
@@ -91,4 +91,4 @@ function testResults(calculation, result) {
   console.log(`The function returned : ${calculation}`); //\nShould be : ${result}`);
 }
 
-module.exports = { areEqual, getType, isSubObject };
+module.exports = { deepEqual, getType, isSubObject };

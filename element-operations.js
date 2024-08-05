@@ -41,14 +41,13 @@ async function link(page, handle) {
 }
 
 /* Clicks on the element even if it is not visible.*/
-async function click(page, handle) {
+async function click(handle) {
   handle.evaluate((el) => el.click());
 }
 
 //types into input field
 async function type(page, selector, text) {
-  await page.waitForSelector(selector, { timeout: 4000 });
-  await page.type(selector, text);
+  await page.locator(selector).fill(text);
 }
 
 /* Gets a JSHandle object. Returns a promise of an object which contains attributes of the element. */

@@ -18,4 +18,15 @@ async function getUserInput(message) {
   return await askQuestion(message);
 }
 
-module.exports = { getUserInput };
+async function getClassesToRegister() {
+  return (
+    await io.getUserInput(
+      "Type the classes you want to register separated by COMAS (,)(Example: CS121 , ESS101 ,..., FND101 ):\n\n"
+    )
+  )
+    .replace(/\s+/g, "")
+    .split(",")
+    .map((className) => className.toUpperCase());
+}
+
+module.exports = { getUserInput, getClassesToRegister };
