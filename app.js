@@ -25,7 +25,8 @@ async function main() {
   const userLogin = "gor_martirosyan@edu.aua.am";
   const userPassword = "200218";
   const classesToRegister = [
-    //"CS107C",
+    //"CS222B",
+    "CS246A",
     "CS112D",
   ];
   const userName = "Gor";
@@ -104,7 +105,7 @@ async function checkIfElementExists(page, selector, timeout = 3000) {
   }
 }
 
-async function isTextVisible(page, uniqueTextInsidePage, timeout = 0) {
+async function isTextVisible(page, uniqueTextInsidePage, timeout = 3000) {
   return await checkIfElementExists(
     page,
     `::-p-xpath(//*[contains(text(), "${uniqueTextInsidePage}")])`,
@@ -165,8 +166,27 @@ async function registerForClass(page, classFullName) {
 }
 
 async function completeRegistrationForClass(page) {
-  await page.locator(`a ::-p-text(Complete Registration)`).click();
-  await page.locator(`a ::-p-text(Complete Registration)`).click();
+  const registerButton = await page.waitForSelector(
+    `::-p-xpath(//a[contains(text(),"Complete Registration")])`,
+    { timeout: 3000 }
+  );
+  await opLib.click(registerButton);
+  if (
+    await checkIfElementExists(
+      page,
+      `::-p-xpath(//a[contains(text(),"Return")])`,
+      4000
+    )
+  ) {
+    const returnButton = await page.waitForSelector(
+      `::-p-xpath(//a[contains(text(),"Return")])`,
+      {
+        timeout: 3000,
+      }
+    );
+    await opLib.click(returnButton);
+    return true;
+  }
 }
 
 function notifyAboutRegistration(className) {
