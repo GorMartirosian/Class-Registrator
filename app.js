@@ -11,26 +11,26 @@ async function main() {
     defaultViewport: false,
   });
 
-  // const userLogin = await io.getUserInput(
-  //   "Your Jenzabar mail (or login idc): "
-  // );
-  // const userPassword = await io.getUserInput(
-  //   "Your Jenzabar password (I won't steal it): "
-  // );
-  // const classesToRegister = await io.getClassesToRegister();
-  // const userName = toTitleCase(await io.getUserInput("Your name: "));
-  // const userSurname = toTitleCase(await io.getUserInput("Your surname: "));
+  const userLogin = await io.getUserInput(
+    "Your Jenzabar mail (or login idc): "
+  );
+  const userPassword = await io.getUserInput(
+    "Your Jenzabar password (I won't steal it): "
+  );
+  const classesToRegister = await io.getClassesToRegister();
+  const userName = toTitleCase(await io.getUserInput("Your name: "));
+  const userSurname = toTitleCase(await io.getUserInput("Your surname: "));
 
   //MOCK SAMPLES
-  const userLogin = "gor_martirosyan@edu.aua.am";
-  const userPassword = "200218";
-  const classesToRegister = [
-    //"CS222B",
-    "CS246A",
-    "CS112D",
-  ];
-  const userName = "Gor";
-  const userSurname = "Martirosyan";
+  // const userLogin = "";
+  // const userPassword = "";
+  // const classesToRegister = [
+  //   "CS222B",
+  //   "CS246A",
+  //   "CS112D",
+  // ];
+  // const userName = "";
+  // const userSurname = "";
 
   const page = await browser.newPage();
   await page.goto("https://auasonis.jenzabarcloud.com/");
@@ -118,20 +118,20 @@ async function login(page, login, password, name, surname) {
   const passwordPrompt = "Repeat you password: ";
   let needToRepreatCredentials = false;
   while (true) {
-    // if(needToRepreatCredentials){
-    //let loginName = await io.getUserInput(loginPrompt); | will go down
-    //console.log("\n");
-    //let password = await io.getUserInput(passwordPrompt); | wiil go down
-    // }
-    await page.locator("#id_login").fill("gor_martirosyan@edu.aua.am");
-    await page.locator("#id_pin").fill("200218");
+    if(needToRepreatCredentials){
+    let loginName = await io.getUserInput(loginPrompt);
+    console.log("\n");
+    let password = await io.getUserInput(passwordPrompt);
+    }
+    await page.locator("#id_login").fill(login);
+    await page.locator("#id_pin").fill(password);
     await opLib.click(await page.$("#Submit"));
     if (await checkLogin(page, name + " " + surname)) {
       console.log("Successfully logged in!");
       break;
     }
     console.log("\nWrong login or password, try again!\n");
-    //needToRepreatCredentials = true;
+    needToRepreatCredentials = true;
   }
 }
 

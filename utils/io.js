@@ -20,7 +20,7 @@ async function getUserInput(message) {
 
 async function getClassesToRegister() {
   return (
-    await io.getUserInput(
+    await getUserInput(
       "Type the classes you want to register separated by COMAS (,)(Example: CS121 , ESS101 ,..., FND101 ):\n\n"
     )
   )
